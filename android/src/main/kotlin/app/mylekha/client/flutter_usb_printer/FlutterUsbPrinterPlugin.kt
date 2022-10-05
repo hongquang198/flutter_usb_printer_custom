@@ -41,7 +41,8 @@ class FlutterUsbPrinterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
         "connect" -> {
           val vendorId = call.argument<Int>("vendorId")
           val productId = call.argument<Int>("productId")
-          connect(vendorId!!, productId!!, result)
+          val deviceId = call.argument<Int?>("deviceId")
+          connect(vendorId!!, productId!!, deviceId, result)
         }
         "close" -> {
           close(result)
@@ -90,8 +91,8 @@ class FlutterUsbPrinterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     result.success(list)
   }
 
-  private fun connect(vendorId: Int, productId: Int, result: Result) {
-    if (!adapter!!.selectDevice(vendorId!!, productId!!)) {
+  private fun connect(vendorId: Int, productId: Int, deviceId: Int?, result: Result) {
+    if (!adapter!!.selectDevice(vendorId!!, productId!!, deviceId)) {
       result.success(false)
     } else {
       result.success(true)
