@@ -110,7 +110,7 @@ class USBPrinterAdapter {
             closeConnectionIfExists()
             val usbDevices = getDeviceList()
             for (usbDevice in usbDevices) {
-                if (usbDevice.vendorId == vendorId && usbDevice.productId == productId && usbDevice.deviceId == deviceId) {
+                if (usbDevice.vendorId == vendorId && usbDevice.productId == productId && ((usbDevice.deviceId == deviceId) || deviceId == null)) {
                     Log.v(
                         LOG_TAG,
                         "Request for device: vendor_id: " + usbDevice.vendorId + ", product_id: " + usbDevice.productId + 
