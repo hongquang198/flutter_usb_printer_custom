@@ -41,8 +41,8 @@ class FlutterUsbPrinterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
         "connect" -> {
           val vendorId = call.argument<Int>("vendorId")
           val productId = call.argument<Int>("productId")
-          val deviceId = call.argument<Int?>("deviceId")
-          connect(vendorId!!, productId!!, deviceId, result)
+          val deviceName = call.argument<String?>("deviceName")
+          connect(vendorId!!, productId!!, deviceName, result)
         }
         "close" -> {
           close(result)
@@ -82,7 +82,6 @@ class FlutterUsbPrinterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
       }else{
         deviceMap["productName"] = "unknown";
       }
-      deviceMap["deviceId"] = Integer.toString(usbDevice.deviceId)
       deviceMap["vendorId"] = Integer.toString(usbDevice.vendorId)
       deviceMap["productId"] = Integer.toString(usbDevice.productId)
       list.add(deviceMap)
@@ -91,8 +90,8 @@ class FlutterUsbPrinterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     result.success(list)
   }
 
-  private fun connect(vendorId: Int, productId: Int, deviceId: Int?, result: Result) {
-    if (!adapter!!.selectDevice(vendorId!!, productId!!, deviceId)) {
+  private fun connect(vendorId: Int, productId: Int, deviceName: String?, result: Result) {
+    if (!adapter!!.selectDevice(vendorId!!, productId!!, deviceName)) {
       result.success(false)
     } else {
       result.success(true)

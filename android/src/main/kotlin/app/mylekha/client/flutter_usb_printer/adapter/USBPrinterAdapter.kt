@@ -49,7 +49,7 @@ class USBPrinterAdapter {
                     if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
                         Log.i(
                             LOG_TAG,
-                            "Success to grant permission for device " + usbDevice!!.deviceId + ", vendor_id: " + usbDevice.vendorId + " product_id: " + usbDevice.productId
+                            "Success to grant permission for device " + usbDevice!!.deviceName + ", vendor_id: " + usbDevice.vendorId + " product_id: " + usbDevice.productId
                         )
                         mUsbDevice = usbDevice
                     } else {
@@ -104,17 +104,17 @@ class USBPrinterAdapter {
         return ArrayList(mUSBManager!!.deviceList.values)
     }
 
-    fun selectDevice(vendorId: Int, productId: Int, deviceId: Int?): Boolean {
+    fun selectDevice(vendorId: Int, productId: Int, deviceName: String?): Boolean {
         if (mUsbDevice == null || (mUsbDevice!!.vendorId != vendorId) || 
-                (mUsbDevice!!.productId != productId) || (mUsbDevice!!.deviceId != deviceId) && (deviceId != null) ) {
+                (mUsbDevice!!.productId != productId) || (mUsbDevice!!.deviceName != deviceName) && (deviceName != null) ) {
             closeConnectionIfExists()
             val usbDevices = getDeviceList()
             for (usbDevice in usbDevices) {
-                if (usbDevice.vendorId == vendorId && usbDevice.productId == productId && ((usbDevice.deviceId == deviceId) || deviceId == null)) {
+                if (usbDevice.vendorId == vendorId && usbDevice.productId == productId && ((usbDevice.deviceName == deviceName) || deviceName == null)) {
                     Log.v(
                         LOG_TAG,
                         "Request for device: vendor_id: " + usbDevice.vendorId + ", product_id: " + usbDevice.productId + 
-                            ", device_id: " + usbDevice.deviceId
+                            ", device_name: " + usbDevice.deviceName
                     )
                     closeConnectionIfExists()
                     mUSBManager!!.requestPermission(usbDevice, mPermissionIndent)
