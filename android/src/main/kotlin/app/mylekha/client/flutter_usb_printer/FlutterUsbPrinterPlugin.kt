@@ -90,8 +90,8 @@ class FlutterUsbPrinterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     result.success(list)
   }
 
-  private fun connect(vendorId: Int, productId: Int, deviceName: String?, result: Result) {
-    if (!adapter!!.selectDevice(vendorId!!, productId!!, deviceName)) {
+  private fun connect(vendorId: Int, productId: Int, deviceName: String?, manufacturerName: String?, result: Result) {
+    if (!adapter!!.selectDevice(vendorId!!, productId!!, deviceName, manufacturerName)) {
       result.success(false)
     } else {
       result.success(true)

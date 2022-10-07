@@ -104,17 +104,24 @@ class USBPrinterAdapter {
         return ArrayList(mUSBManager!!.deviceList.values)
     }
 
-    fun selectDevice(vendorId: Int, productId: Int, deviceName: String?): Boolean {
+    fun selectDevice(vendorId: Int, productId: Int, deviceName: String?, manufacturerName: String?): Boolean {
         if (mUsbDevice == null || (mUsbDevice!!.vendorId != vendorId) || 
-                (mUsbDevice!!.productId != productId) || (mUsbDevice!!.deviceName != deviceName) && (deviceName != null) ) {
+                (mUsbDevice!!.productId != productId) || 
+                (mUsbDevice!!.deviceName != deviceName) && (deviceName != null)) || 
+                (mUsbDevice!!.manufacturerName != manufacturerName) && (manufacturerName != null)) {
+
             closeConnectionIfExists()
             val usbDevices = getDeviceList()
             for (usbDevice in usbDevices) {
-                if (usbDevice.vendorId == vendorId && usbDevice.productId == productId && ((usbDevice.deviceName == deviceName) || deviceName == null)) {
+                
+                if (usbDevice.vendorId == vendorId && usbDevice.productId == productId 
+                        && ((usbDevice.deviceName == deviceName) || deviceName == null) 
+                        && ((usbDevice.manufacturerName == manufacturerName) || manufacturerName == null)) {
+                    
                     Log.v(
                         LOG_TAG,
                         "Request for device: vendor_id: " + usbDevice.vendorId + ", product_id: " + usbDevice.productId + 
-                            ", device_name: " + usbDevice.deviceName
+                            ", device_name: " + usbDevice.deviceName  + ", manufacturer_name: " + usbDevice.manufacturerName
                     )
                     closeConnectionIfExists()
                     mUSBManager!!.requestPermission(usbDevice, mPermissionIndent)
