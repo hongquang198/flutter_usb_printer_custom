@@ -42,7 +42,8 @@ class FlutterUsbPrinterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
           val vendorId = call.argument<Int>("vendorId")
           val productId = call.argument<Int>("productId")
           val deviceName = call.argument<String?>("deviceName")
-          connect(vendorId!!, productId!!, deviceName, result)
+          val manufacturerName = call.argument<String?>("manufacturerName")
+          connect(vendorId!!, productId!!, deviceName, manufacturerName, result)
         }
         "close" -> {
           close(result)
