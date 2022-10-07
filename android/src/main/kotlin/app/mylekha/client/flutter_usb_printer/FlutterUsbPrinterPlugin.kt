@@ -83,6 +83,7 @@ class FlutterUsbPrinterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
       }else{
         deviceMap["productName"] = "unknown";
       }
+      deviceMap["deviceId"] = Integer.toString(usbDevice.deviceId)
       deviceMap["vendorId"] = Integer.toString(usbDevice.vendorId)
       deviceMap["productId"] = Integer.toString(usbDevice.productId)
       list.add(deviceMap)
