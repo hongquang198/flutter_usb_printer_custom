@@ -107,8 +107,8 @@ class USBPrinterAdapter {
     fun selectDevice(vendorId: Int, productId: Int, deviceName: String?, manufacturerName: String?): Boolean {
         if (mUsbDevice == null || (mUsbDevice!!.vendorId != vendorId) || 
                 (mUsbDevice!!.productId != productId) || 
-                (mUsbDevice!!.deviceName != deviceName) && (deviceName != null)) || 
-                (mUsbDevice!!.manufacturerName != manufacturerName) && (manufacturerName != null)) {
+                ((mUsbDevice!!.deviceName != deviceName) && (deviceName != null)) || 
+                ((mUsbDevice!!.manufacturerName != manufacturerName) && (manufacturerName != null))) {
 
             closeConnectionIfExists()
             val usbDevices = getDeviceList()
